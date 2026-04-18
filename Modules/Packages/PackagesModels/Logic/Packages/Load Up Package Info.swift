@@ -177,7 +177,7 @@ extension BrewPackage
 
             /// Whether the cask was installed as dependency
             /// Always false, since Casks can't have dependencies or be dependants
-            let installedAsDependency: Bool = false
+            var installedAsDependency: Bool { false }
 
             /// Whether the cas is outdated
             let outdated: Bool

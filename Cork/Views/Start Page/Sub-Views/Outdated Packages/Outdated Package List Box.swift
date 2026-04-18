@@ -159,7 +159,7 @@ struct OutdatedPackageListBox: View
         {
             outdatedPackagesTracker.outdatedPackages = Set(outdatedPackagesTracker.outdatedPackages.map
             { modifiedElement in
-                var copyOutdatedPackage: OutdatedPackage = modifiedElement
+                let copyOutdatedPackage: OutdatedPackage = modifiedElement
                 if copyOutdatedPackage.id == modifiedElement.id
                 {
                     copyOutdatedPackage.isSelected = false
@@ -191,7 +191,7 @@ struct OutdatedPackageListBox: View
         {
             outdatedPackagesTracker.outdatedPackages = Set(outdatedPackagesTracker.outdatedPackages.map
             { modifiedElement in
-                var copyOutdatedPackage: OutdatedPackage = modifiedElement
+                let copyOutdatedPackage: OutdatedPackage = modifiedElement
                 if copyOutdatedPackage.id == modifiedElement.id
                 {
                     copyOutdatedPackage.isSelected = true
@@ -234,7 +234,7 @@ struct OutdatedPackageListBox: View
                         }, set: { toggleState in
                             outdatedPackagesTracker.outdatedPackages = Set(outdatedPackagesTracker.outdatedPackages.map
                             { modifiedElement in
-                                var copyOutdatedPackage: OutdatedPackage = modifiedElement
+                                let copyOutdatedPackage: OutdatedPackage = modifiedElement
                                 if copyOutdatedPackage.id == outdatedPackage.id
                                 {
                                     copyOutdatedPackage.isSelected = toggleState
