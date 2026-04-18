@@ -8,7 +8,6 @@
 import CorkShared
 import Foundation
 import SwiftUI
-import CorkModels
 import CorkTerminalFunctions
 
 public enum OutdatedPackageRetrievalError: LocalizedError
@@ -68,8 +67,8 @@ public extension OutdatedPackagesTracker
         /// ``Set<OutdatedPackage>`` that holds packages whose updates are managed by Homebrew, plus those that are not
         let outdatedPackagesGreedy: Set<OutdatedPackage> = try await getOutdatedPackagesInternal(brewPackagesTracker: brewPackagesTracker, forUpdatingType: .selfUpdating)
         
-        print("Contents of non-greedy update checker: \(try await outdatedPackagesNonGreedy.map{$0.package.name(withPrecision: .precise)}), \(try await outdatedPackagesNonGreedy.count)")
-        print("Contents of greedy update checker: \(try await outdatedPackagesGreedy.map{$0.package.name(withPrecision: .precise)}), \(try await outdatedPackagesGreedy.count)")
+        print("Contents of non-greedy update checker: \(outdatedPackagesNonGreedy.map{$0.package.name(withPrecision: .precise)}), \(outdatedPackagesNonGreedy.count)")
+        print("Contents of greedy update checker: \(outdatedPackagesGreedy.map{$0.package.name(withPrecision: .precise)}), \(outdatedPackagesGreedy.count)")
         
         /// This includes only those packages that are greedy
         let difference: Set<OutdatedPackage> = outdatedPackagesGreedy.subtracting(outdatedPackagesNonGreedy)

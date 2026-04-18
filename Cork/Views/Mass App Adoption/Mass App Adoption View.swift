@@ -107,7 +107,7 @@ struct MassAppAdoptionView: View
         var id: UUID
         {
             switch self {
-            case .failedWithError(let failedAdoptionCandidate, let error):
+            case .failedWithError(let failedAdoptionCandidate, _):
                 return failedAdoptionCandidate.id
             }
         }

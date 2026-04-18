@@ -460,7 +460,7 @@ struct CorkApp: App
                 let picker: NSOpenPanel = .init()
                 picker.allowsMultipleSelection = false
                 picker.canChooseDirectories = false
-                picker.allowedFileTypes = ["brewbak", ""]
+                picker.allowedContentTypes = [.homebrewBackup]
 
                 if picker.runModal() == .OK
                 {
@@ -706,7 +706,7 @@ struct CorkApp: App
 
                     let previousOutdatedPackages: Set<OutdatedPackage> = await outdatedPackagesTracker.outdatedPackages
 
-                    if await newOutdatedPackages.count > previousOutdatedPackages.count
+                    if newOutdatedPackages.count > previousOutdatedPackages.count
                     {
                         AppConstants.shared.logger.log("New updates found")
 
@@ -719,7 +719,10 @@ struct CorkApp: App
                         )
                         AppConstants.shared.logger.debug("Changed packages: \(differentPackages, privacy: .auto)")
 
-                        sendNotification(title: String(localized: "notification.new-outdated-packages-found.title"), subtitle: differentPackages.map{$0.package.name(withPrecision: .precise)}.formatted(.list(type: .and)))
+                        let changedPackageNames: String = await MainActor.run {
+                            differentPackages.map { $0.package.name(withPrecision: .precise) }.formatted(.list(type: .and))
+                        }
+                        sendNotification(title: String(localized: "notification.new-outdated-packages-found.title"), subtitle: changedPackageNames)
 
                         await outdatedPackagesTracker.setOutdatedPackages(to: newOutdatedPackages)
 

@@ -363,7 +363,7 @@ private extension View
         self
             .onChange(of: view.cachedDownloadsTracker.cachedDownloadsSize)
             {
-                #warning("FIXME: This might fuck up the memory")
+                // FIXME: This might fuck up the memory
                 Task
                 {
                     AppConstants.shared.logger.info("Will recalculate cached downloads")
