@@ -8,11 +8,12 @@
 import SwiftUI
 import Defaults
 import CorkModels
+import CorkShared
 
 struct OutdatedPackageListBoxRow: View
 {
-    @Default(.outdatedPackageInfoDisplayAmount) var outdatedPackageInfoDisplayAmount
-    @Default(.showOldVersionsInOutdatedPackageList) var showOldVersionsInOutdatedPackageList
+    @Default(.outdatedPackageInfoDisplayAmount) var outdatedPackageInfoDisplayAmount: OutdatedPackageInfoAmount
+    @Default(.showOldVersionsInOutdatedPackageList) var showOldVersionsInOutdatedPackageList: Bool
 
     let outdatedPackage: OutdatedPackage
 

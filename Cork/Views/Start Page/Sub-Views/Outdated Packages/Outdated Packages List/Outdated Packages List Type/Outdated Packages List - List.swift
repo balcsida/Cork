@@ -6,12 +6,13 @@
 //
 
 import CorkModels
+import CorkShared
 import Defaults
 import SwiftUI
 
 struct OutdatedPackagesList_List: View
 {
-    @Default(.outdatedPackageInfoDisplayAmount) var outdatedPackageInfoDisplayAmount
+    @Default(.outdatedPackageInfoDisplayAmount) var outdatedPackageInfoDisplayAmount: OutdatedPackageInfoAmount
     
     @Environment(OutdatedPackagesTracker.self) var outdatedPackagesTracker: OutdatedPackagesTracker
 

@@ -131,7 +131,7 @@ struct AdoptablePackagesList: View
         {
             AppConstants.shared.logger.debug("Will deselect all adoptable casks")
 
-            for (index, _) in brewPackagesTracker.adoptableApps.enumerated()
+            for index in brewPackagesTracker.adoptableApps.indices
             {
                 brewPackagesTracker.adoptableApps[index].isMarkedForAdoption = false
             }
@@ -150,7 +150,7 @@ struct AdoptablePackagesList: View
         {
             AppConstants.shared.logger.debug("Will select all adoptable casks")
 
-            for (index, _) in brewPackagesTracker.adoptableApps.enumerated()
+            for index in brewPackagesTracker.adoptableApps.indices
             {
                 brewPackagesTracker.adoptableApps[index].isMarkedForAdoption = true
             }
