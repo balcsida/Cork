@@ -234,7 +234,7 @@ struct AdoptablePackagesSection: View
                 }
             }
             .dialogSeverity(.standard)
-            .confirmationDialog("hide-adoptable-packages-section-if-only-excluded-apps-available.confirmation.title", isPresented: $isShowingAdoptablePackagesSectionHidingWarningIfThereAreOnlyExcludedAdoptablePackagesAvailable)
+            .confirmationDialog("hide-adoptable-packages-section-if-only-excluded-apps-available.confirmation.title", isPresented: $isShowingHideOnlyExcludedAppsWarning)
             {
                 if #available(macOS 26, *)
                 {
@@ -259,7 +259,7 @@ struct AdoptablePackagesSection: View
                 
                 Button(role: .cancel)
                 {
-                    isShowingAdoptablePackagesSectionHidingWarningIfThereAreOnlyExcludedAdoptablePackagesAvailable = false
+                    isShowingHideOnlyExcludedAppsWarning = false
                 } label: {
                     Text("action.cancel")
                 }
@@ -295,13 +295,13 @@ struct AdoptablePackagesSection: View
         .disabled(brewPackagesTracker.adoptableAppsSelectedToBeAdopted.isEmpty)
     }
     
-    @State private var isShowingAdoptablePackagesSectionHidingWarningIfThereAreOnlyExcludedAdoptablePackagesAvailable: Bool = false
+    @State private var isShowingHideOnlyExcludedAppsWarning: Bool = false
     
     @ViewBuilder
     var hideAdoptablePackagesSectionIfThereAreOnlyIgnoredAppsButton: some View
     {
         Button {
-            isShowingAdoptablePackagesSectionHidingWarningIfThereAreOnlyExcludedAdoptablePackagesAvailable = true
+            isShowingHideOnlyExcludedAppsWarning = true
         } label: {
             Label("action.hide-adoptable-packages-section-if-only-excluded-apps-available", systemImage: "eye.slash")
         }

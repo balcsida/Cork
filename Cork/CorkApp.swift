@@ -5,7 +5,7 @@
 //  Created by David Bureš on 03.07.2022.
 //
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length type_body_length
 
 import ButtonKit
 import CorkNotifications

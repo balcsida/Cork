@@ -107,7 +107,6 @@ struct OutdatedPackagesList_Table: View
                 { outdatedPackage in
                     Text(outdatedPackage.package.name(withPrecision: .precise))
                 }
-        
 
                 TableColumn("start-page.updates.installed-version")
                 { outdatedPackage in

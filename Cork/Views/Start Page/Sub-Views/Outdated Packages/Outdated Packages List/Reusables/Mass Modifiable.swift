@@ -20,4 +20,3 @@ protocol MassModifiable
     var selectAllButton: SelectAllButton { get }
     var deselectAllButton: DeselectAllButton { get }
 }
-
