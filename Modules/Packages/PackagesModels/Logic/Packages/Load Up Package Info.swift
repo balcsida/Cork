@@ -6,8 +6,8 @@
 //
 
 import CorkShared
-import Foundation
 import CorkTerminalFunctions
+import Foundation
 
 enum BrewPackageInfoLoadingError: LocalizedError
 {
@@ -58,9 +58,22 @@ extension BrewPackage
             {
                 /// Backwards compatibility before `installedOnRequest` was added
                 let installedAsDependency: Bool?
-                
+
                 /// ``true`` when **NOT** a dependency, ``false`` **WHEN** a dependency
                 let installedOnRequest: Bool?
+
+                var isDependencyOfAnotherPackage: Bool
+                {
+                    if let installedOnRequest = installedOnRequest
+                    {
+                        return !installedOnRequest
+                    }
+                    if let installedAsDependency = installedAsDependency
+                    {
+                        return installedAsDependency
+                    }
+                    return false
+                }
 
                 struct RuntimeDependencies: Codable
                 {
@@ -181,7 +194,7 @@ extension BrewPackage
 
             /// Whether the cask was installed as dependency
             /// Always false, since Casks can't have dependencies or be dependants
-            let installedAsDependency: Bool = false
+            let isDependencyOfAnotherPackage: Bool = false
 
             /// Whether the cas is outdated
             let outdated: Bool
@@ -339,7 +352,7 @@ extension BrewPackage
                     description: formulaInfo.desc,
                     homepage: formulaInfo.homepage,
                     tap: .init(name: formulaInfo.tap),
-                    installedAsDependency: formulaInfo.installed.first?.installedAsDependency ?? false,
+                    installedAsDependency: formulaInfo.installed.first?.isDependencyOfAnotherPackage ?? false,
                     dependencies: formulaInfo.extractDependencies(),
                     outdated: formulaInfo.outdated,
                     caveats: formulaInfo.caveats,
