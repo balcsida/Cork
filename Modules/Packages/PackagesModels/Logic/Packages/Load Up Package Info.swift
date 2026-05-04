@@ -56,7 +56,11 @@ extension BrewPackage
 
             struct Installed: Codable
             {
-                let installedAsDependency: Bool
+                /// Backwards compatibility before `installedOnRequest` was added
+                let installedAsDependency: Bool?
+                
+                /// ``true`` when **NOT** a dependency, ``false`` **WHEN** a dependency
+                let installedOnRequest: Bool?
 
                 struct RuntimeDependencies: Codable
                 {
