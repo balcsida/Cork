@@ -65,23 +65,44 @@ jobs:
         if: steps.check.outputs.needs_sync == 'true' && steps.rebase.outcome == 'success'
         run: git push --force-with-lease origin main-fork
 
-      - name: Open issue on rebase conflict
+      - name: Report rebase conflict
         if: steps.check.outputs.needs_sync == 'true' && steps.rebase.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
           UPSTREAM_SHA: ${{ steps.check.outputs.upstream_sha }}
         run: |
           git rebase --abort || true
+
+          echo "::error::Rebase conflict: main-fork could not be rebased onto upstream/main at $UPSTREAM_SHA. Manual resolution required."
+
+          {
+            echo "## ⚠️ Upstream sync: rebase conflict on main-fork"
+            echo ""
+            echo "Automated sync could not rebase \`main-fork\` onto upstream/main at \`$UPSTREAM_SHA\`. Manual resolution needed."
+            echo ""
+            echo "**Run:** $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo ""
+            echo "**Resolve locally:**"
+            echo '```'
+            echo 'git fetch upstream && git fetch origin'
+            echo 'git checkout main-fork && git rebase upstream/main'
+            echo '# resolve conflicts, then:'
+            echo 'git push --force-with-lease origin main-fork'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
           gh issue create \
             --title "Upstream sync: rebase conflict on main-fork" \
             --body "Automated sync could not rebase \`main-fork\` onto upstream/main at \`$UPSTREAM_SHA\`. Manual resolution needed.
 
-          **Run:** $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+**Run:** $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
 
-          Resolve locally:
-          \`\`\`
-          git fetch upstream && git fetch origin
-          git checkout main-fork && git rebase upstream/main
-          # resolve conflicts, then:
-          git push --force-with-lease origin main-fork
-          \`\`\`"
+Resolve locally:
+\`\`\`
+git fetch upstream && git fetch origin
+git checkout main-fork && git rebase upstream/main
+# resolve conflicts, then:
+git push --force-with-lease origin main-fork
+\`\`\`" || echo "Note: Could not create issue (Issues may be disabled in this repository). See the job summary above."
+
+          exit 1
